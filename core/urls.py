@@ -1,6 +1,9 @@
 from django.urls import path
-from .views import OrganizationsView
+from .views import OrganizationsListView, OrganizationDetailView
+
+app_name = 'core'
 
 urlpatterns = (
-    path('', OrganizationsView.as_view(), name='organizations'),
+    path('', OrganizationsListView.as_view(), name='organizations'),
+    path('<slug:slug>/', OrganizationDetailView.as_view(), name='organization-detail'),
 )

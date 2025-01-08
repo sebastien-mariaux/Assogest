@@ -1,10 +1,10 @@
 
 # Create your views here.
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import Organization
 
 
-class OrganizationsView(ListView):
+class OrganizationsListView(ListView):
     model = Organization
     context_object_name = 'organizations'
     paginate_by = 10
@@ -12,3 +12,18 @@ class OrganizationsView(ListView):
 
     def get_queryset(self):
         return Organization.objects.filter(users=self.request.user)
+
+    # TODO: if only one organization, redirect to organization detail view
+
+
+class OrganizationDetailView(DetailView):
+    model = Organization
+    context_object_name = 'organization'
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
+
+    def get_queryset(self):
+        return Organization.objects.filter(
+            users=self.request.user,
+            slug=self.kwargs['slug']
+        )
