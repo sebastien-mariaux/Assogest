@@ -1,0 +1,245 @@
+[
+  {
+    "model": "agenda.calendarevent",
+    "pk": 1,
+    "fields": {
+      "title": "Concert Brooklyn",
+      "description": "",
+      "start_time": "2025-01-09T18:30:00Z",
+      "end_time": "2025-01-09T21:00:00Z",
+      "location": "NYC",
+      "inscription_required": true,
+      "organization": 2,
+      "created_at": "2025-01-09T18:26:27.152Z",
+      "updated_at": "2025-01-09T18:26:27.152Z"
+    }
+  },
+  {
+    "model": "agenda.calendarevent",
+    "pk": 2,
+    "fields": {
+      "title": "Repetition hebdo",
+      "description": "",
+      "start_time": "2025-01-01T18:30:00Z",
+      "end_time": "2025-01-01T21:00:00Z",
+      "location": "brooklyn",
+      "inscription_required": false,
+      "organization": 2,
+      "created_at": "2025-01-09T18:27:05.537Z",
+      "updated_at": "2025-01-09T18:27:05.537Z"
+    }
+  },
+  {
+    "model": "core.organization",
+    "pk": 1,
+    "fields": {
+      "name": "Asso B99",
+      "slug": "asso-b99",
+      "created_at": "2025-01-09T18:23:50.702Z",
+      "updated_at": "2025-01-09T18:23:50.702Z"
+    }
+  },
+  {
+    "model": "core.organization",
+    "pk": 2,
+    "fields": {
+      "name": "B99 musical",
+      "slug": "b99-musical",
+      "created_at": "2025-01-09T18:24:02.366Z",
+      "updated_at": "2025-01-09T18:24:51.028Z"
+    }
+  },
+  {
+    "model": "core.userorganization",
+    "pk": 1,
+    "fields": {
+      "user": 5,
+      "organization": 2,
+      "created_at": "2025-01-09T18:24:51.028Z",
+      "updated_at": "2025-01-09T18:24:51.028Z"
+    }
+  },
+  {
+    "model": "core.userorganization",
+    "pk": 2,
+    "fields": {
+      "user": 7,
+      "organization": 2,
+      "created_at": "2025-01-09T18:24:51.029Z",
+      "updated_at": "2025-01-09T18:24:51.029Z"
+    }
+  },
+  {
+    "model": "core.userorganization",
+    "pk": 3,
+    "fields": {
+      "user": 2,
+      "organization": 2,
+      "created_at": "2025-01-09T18:24:51.029Z",
+      "updated_at": "2025-01-09T18:24:51.029Z"
+    }
+  },
+  {
+    "model": "core.userorganization",
+    "pk": 4,
+    "fields": {
+      "user": 6,
+      "organization": 2,
+      "created_at": "2025-01-09T18:24:51.029Z",
+      "updated_at": "2025-01-09T18:24:51.029Z"
+    }
+  },
+  {
+    "model": "core.userorganization",
+    "pk": 5,
+    "fields": {
+      "user": 4,
+      "organization": 2,
+      "created_at": "2025-01-09T18:24:51.029Z",
+      "updated_at": "2025-01-09T18:24:51.029Z"
+    }
+  },
+  {
+    "model": "core.userorganization",
+    "pk": 6,
+    "fields": {
+      "user": 3,
+      "organization": 2,
+      "created_at": "2025-01-09T18:24:51.029Z",
+      "updated_at": "2025-01-09T18:24:51.029Z"
+    }
+  },
+  {
+    "model": "core.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$xjEX3lfKDvtByj2PBtMHUd$mC2zadCRnuhxLBgbDteLNvOz1ELQB4GKwpdJNxTMgKc=",
+      "last_login": "2025-01-09T18:14:45.027Z",
+      "is_superuser": true,
+      "username": "django",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2025-01-09T18:14:08.786Z",
+      "email": "admin@django.com",
+      "updated_at": "2025-01-09T18:14:08.948Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "core.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$MPCugJQqfdK2kZPM2t7Hs4$13gw4Oa+556U5iuBcZNpVL2a6d07zY/xP7+M4auUpMU=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "Seb",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-01-09T18:21:37.140Z",
+      "email": "seb@asso.com",
+      "updated_at": "2025-01-09T18:21:37.306Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "core.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$drxvXtWBQ7tXgQvqPwNrQ2$Pp//g66tg6Bd/5Cb0XSLZsMYY+Ww9DQUYfy8daLNIJw=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "Jack",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-01-09T18:22:16.928Z",
+      "email": "jack.peralta@asso.com",
+      "updated_at": "2025-01-09T18:22:17.093Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "core.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$VjR60rFOTMXy7SY2hgkOmF$xxgYT2O09EooDtlji/gowPOpJCmaKG7xs/G1va3gs20=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "Rosa",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-01-09T18:22:30.192Z",
+      "email": "rosa.diaz@b99.com",
+      "updated_at": "2025-01-09T18:22:30.356Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "core.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$4aVLuMAvJ2dIMSV05yPrG4$QmCNHlzNVLXg9Kab4MofXvFjmQqA+xkW4NXDWaDihbo=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "Amy",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-01-09T18:22:49.643Z",
+      "email": "amy.santiago@b99.com",
+      "updated_at": "2025-01-09T18:22:49.807Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "core.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$8sHjCYMwUQka89GduHxpUd$oOF+DWXu1s+cv6ixM+lP1LQtxY+s8g3dgX6K0hD1+x8=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "Captain",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-01-09T18:23:06.142Z",
+      "email": "raymond.holt@b99.com",
+      "updated_at": "2025-01-09T18:23:06.304Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "core.user",
+    "pk": 7,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$p1gVNZIVZVt9bosfVSqTLA$MlgmgYV8r6DQTovpl7gRIEezo5FEBQG3utER/1WkttY=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "Charles",
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2025-01-09T18:23:20.091Z",
+      "email": "charles.boyle@b99.com",
+      "updated_at": "2025-01-09T18:23:20.257Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]
