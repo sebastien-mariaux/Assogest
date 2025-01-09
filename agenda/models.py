@@ -25,14 +25,15 @@ class CalendarEvent(models.Model):
         default=False
     )
     organization = models.ForeignKey(
-        'core.Organization',
+        'nonprofits.Organization',
         on_delete=models.CASCADE
     )
-    users = models.ManyToManyField(
-        User,
-        through='EventInscription',
-        related_name='event_inscriptions'
+    members = models.ManyToManyField(
+        'nonprofits.Member',
+        through='Subscription',
+        related_name='subscriptions'
     )
+
     created_at = models.DateTimeField(
         auto_now_add=True
     )
@@ -44,19 +45,19 @@ class CalendarEvent(models.Model):
         return f"{self.title} - {self.start_time} - {self.end_time}"
 
 
-class EventInscription(models.Model):
+class Subscription(models.Model):
     event = models.ForeignKey(
         CalendarEvent,
         on_delete=models.CASCADE
     )
-    user = models.ForeignKey(
-        User,
+    member = models.ForeignKey(
+        'nonprofits.Member',
         on_delete=models.CASCADE
     )
+
     created_at = models.DateTimeField(
         auto_now_add=True
     )
     updated_at = models.DateTimeField(
         auto_now=True
     )
-

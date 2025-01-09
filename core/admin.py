@@ -3,14 +3,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
-from .models import Organization, UserOrganization
 
 User = get_user_model()
-
-
-class UserOrganizationInline(admin.TabularInline):
-    model = UserOrganization
-    extra = 0
 
 
 class UserAdmin(UserAdmin):
@@ -44,14 +38,6 @@ class UserAdmin(UserAdmin):
             },
         ),
     )
-    inlines = [UserOrganizationInline]
-
-
-class OrganizationAdmin(admin.ModelAdmin):
-    model = Organization
-    list_display = ['name', 'slug', 'created_at', 'updated_at']
-    inlines = [UserOrganizationInline]
 
 
 admin.site.register(User, UserAdmin)
-admin.site.register(Organization, OrganizationAdmin)

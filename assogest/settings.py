@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'agenda',
+    'nonprofits',
 ]
 
 MIDDLEWARE = [
