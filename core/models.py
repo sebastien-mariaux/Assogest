@@ -49,14 +49,8 @@ class UserOrganization(models.Model):
 
 
 class User(AbstractUser):
-    email = models.EmailField(
-        unique=True
-    )
-    # remove username field
-    username = None
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
+    email = models.EmailField(unique=True)
+    # username = None   # This is introducing too many issues, let's keep it for now... :(
     updated_at = models.DateTimeField(
         auto_now=True
     )
@@ -65,8 +59,14 @@ class User(AbstractUser):
         through=UserOrganization,
         related_name='user_organizations'
     )
+    events = models.ManyToManyField(
+        'agenda.CalendarEvent',
+        through='agenda.EventInscription',
+        related_name='event_inscriptions'
+    )
 
     def __str__(self):
         if self.first_name and self.last_name:
             return f"{self.first_name} {self.last_name} ({self.email})"
         return self.email
+

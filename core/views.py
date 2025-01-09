@@ -11,7 +11,11 @@ class OrganizationsListView(ListView):
     ordering = ['name']
 
     def get_queryset(self):
-        return Organization.objects.filter(users=self.request.user)
+        return (
+            Organization.objects
+            .filter(users=self.request.user)
+            .order_by('name')
+        )
 
     # TODO: if only one organization, redirect to organization detail view
 

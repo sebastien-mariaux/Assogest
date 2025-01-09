@@ -22,10 +22,6 @@ class Migration(migrations.Migration):
                 ('updated_at', models.DateTimeField(auto_now=True)),
             ],
         ),
-        migrations.RemoveField(
-            model_name='user',
-            name='username',
-        ),
         migrations.AddField(
             model_name='user',
             name='updated_at',

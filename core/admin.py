@@ -16,6 +16,7 @@ class UserOrganizationInline(admin.TabularInline):
 class UserAdmin(UserAdmin):
     model = User
     list_display = ['email', 'first_name', 'last_name', 'is_staff']
+
     ordering = ['email']
     fieldsets = (
         (None, {"fields": ("email", "password")}),
@@ -33,6 +34,15 @@ class UserAdmin(UserAdmin):
             },
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+    )
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": ("username", "email", "usable_password", "password1", "password2"),
+            },
+        ),
     )
     inlines = [UserOrganizationInline]
 
