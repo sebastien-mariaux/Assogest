@@ -2,9 +2,10 @@
 # Create your views here.
 from django.views.generic import ListView, DetailView
 from .models import Organization
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class OrganizationsListView(ListView):
+class OrganizationsListView(ListView, LoginRequiredMixin):
     model = Organization
     context_object_name = 'organizations'
     paginate_by = 10
@@ -13,7 +14,7 @@ class OrganizationsListView(ListView):
     def get_queryset(self):
         return (
             Organization.objects
-            .filter(users=self.request.user)
+            .filter(members=self.request.user.member)
             .order_by('name')
         )
 
@@ -28,6 +29,6 @@ class OrganizationDetailView(DetailView):
 
     def get_queryset(self):
         return Organization.objects.filter(
-            users=self.request.user,
+            members=self.request.user.member,
             slug=self.kwargs['slug']
         )

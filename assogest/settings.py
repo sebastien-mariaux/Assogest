@@ -79,6 +79,8 @@ TEMPLATES = [
 
 TEMPLATE_DIRS = [
     os.path.join(PROJECT_PATH, 'core', 'templates', 'core'),
+    os.path.join(PROJECT_PATH, 'core', 'templates', 'registration'),
+    os.path.join(PROJECT_PATH, 'nonprofits', 'templates', 'nonprofits'),
 ]
 
 WSGI_APPLICATION = 'assogest.wsgi.application'
