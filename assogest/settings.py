@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
-
+SITE_TITLE = 'AssoGest'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,7 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "compressor",
+    "cssmin",
+    "jsmin",
     'core',
     'agenda',
     'nonprofits',
@@ -64,6 +66,11 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+                os.path.join(BASE_DIR, "assogest", "templates"),
+                os.path.join(BASE_DIR, "assogest", "templates",  "assogest"),
+                os.path.join(BASE_DIR, 'core', 'templates', 'core'),
+                os.path.join(BASE_DIR, 'core', 'templates', 'registration'),
+                os.path.join(BASE_DIR, 'nonprofits', 'templates', 'nonprofits'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -72,15 +79,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'assogest.context_processors.site_title',
             ],
         },
     },
-]
-
-TEMPLATE_DIRS = [
-    os.path.join(PROJECT_PATH, 'core', 'templates', 'core'),
-    os.path.join(PROJECT_PATH, 'core', 'templates', 'registration'),
-    os.path.join(PROJECT_PATH, 'nonprofits', 'templates', 'nonprofits'),
 ]
 
 WSGI_APPLICATION = 'assogest.wsgi.application'
@@ -132,6 +134,33 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_FINDERS = (
+  'django.contrib.staticfiles.finders.FileSystemFinder',
+  'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+  'compressor.finders.CompressorFinder',
+)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'assogest', 'static'),
+    os.path.join(BASE_DIR, 'core', 'static'),
+    os.path.join(BASE_DIR, 'nonprofits', 'static'),
+    os.path.join(BASE_DIR, 'agenda', 'static'),
+]
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+COMPRESS_ENABLED = True
+COMPRESS_ROOT = STATIC_ROOT  # django compressor
+COMPRESS_OFFLINE = True
+
+
+
+
+# if not COMPRESS_ENABLED:  # django compressor
+#     COMPRESS_ENABLED = True
+#     COMPRESS_CSS_FILTERS = ["compressor.filters.cssmin.CSSMinFilter"]
+#     COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.JSMinFilter"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
