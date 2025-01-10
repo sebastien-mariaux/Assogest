@@ -61,7 +61,6 @@ class Membership(models.Model):
         'Organization',
         on_delete=models.CASCADE
     )
-
     created_at = models.DateTimeField(
         auto_now_add=True
     )

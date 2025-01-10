@@ -26,7 +26,8 @@ class CalendarEvent(models.Model):
     )
     organization = models.ForeignKey(
         'nonprofits.Organization',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='events'
     )
     members = models.ManyToManyField(
         'nonprofits.Member',

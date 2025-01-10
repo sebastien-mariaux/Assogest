@@ -32,3 +32,9 @@ class OrganizationDetailView(DetailView):
             members=self.request.user.member,
             slug=self.kwargs['slug']
         )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['events'] = self.object.events.order_by('start_time')[:5]
+        return context
+    
