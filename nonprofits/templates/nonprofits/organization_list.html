@@ -1,11 +1,18 @@
 {% extends "layouts/simple.html" %}
 {% load i18n %}
 
+{% block header %}
+<header>
+    <h1>Organizations</h1>
+</header>
+{% endblock header %}
 
-<h1>Organizations</h1>
 
-{% for organization in organizations %}
-    <ul class="organization">
-        <li><a href="{% url 'core:organization-detail' organization.slug %}">{{organization.name}}</a></li>
-    </ul>
-{% endfor %}
+{% block content %}
+
+    {% for organization in organizations %}
+        <ul class="organization">
+            <li><a href="{% url 'core:organization-detail' organization.slug %}">{{organization.name}}</a></li>
+        </ul>
+    {% endfor %}
+{% endblock content %}

@@ -5,13 +5,13 @@
     {% include "nav.html" %}
   {% endblock nav %}
 
+<header>
 {% block header %}
-  <header>
-    {% include "header.html" %}
-  </header>
 {% endblock header %}
+</header>
 
 <div class="main-container">
+
   {% block message %}
     {% if messages %}
     <div class="messages">

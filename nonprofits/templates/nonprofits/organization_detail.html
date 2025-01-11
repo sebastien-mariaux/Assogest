@@ -1,16 +1,17 @@
-{% extends "layouts/simple.html" %}
+{% extends "layouts/organization.html" %}
 {% load i18n %}
 
+{% block content %}
+    
 
-<h1>{{organization.name}}</h1>
-
-<section class="organization-events">
-    <h2>Incoming events</h2>
-    <ul>
-        {% for event in events %}
-            <li>
-                {{ event.title }} - {{ event.start_time }}
-            </li>
-        {% endfor %}
-    </ul>
-</section>
+    <section class="organization-events">
+        <h2>Incoming events</h2>
+        <ul>
+            {% for event in events %}
+                <li>
+                    {{ event.title }} - {{ event.start_time }}
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock content %}
