@@ -10,6 +10,10 @@
 
 {% block content %}
 
+    {% if not organizations %}
+        <p>You do not belong to any organization yet!</p>
+    {% endif %}
+
     {% for organization in organizations %}
         <ul class="organization">
             <li><a href="{% url 'core:organization-detail' organization.slug %}">{{organization.name}}</a></li>

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "cssmin",
     "jsmin",
     'core',
+    'users',
     'agenda',
     'nonprofits',
 ]
@@ -71,6 +72,7 @@ TEMPLATES = [
                 os.path.join(BASE_DIR, 'core', 'templates', 'core'),
                 os.path.join(BASE_DIR, 'core', 'templates', 'registration'),
                 os.path.join(BASE_DIR, 'nonprofits', 'templates', 'nonprofits'),
+                os.path.join(BASE_DIR, 'users', 'templates', 'registration'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

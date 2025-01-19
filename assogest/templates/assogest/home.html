@@ -5,9 +5,8 @@
    {% trans 'Home' %}
 {% endblock title %}
 
-{% block header %}
-{% endblock header %}
-
 {% block content %}
-   {{ readme | safe }}
+   <div class="container">
+      {{ readme | safe }}
+   </div>
 {% endblock content %}
