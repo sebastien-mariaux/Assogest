@@ -22,6 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 AUTH_USER_MODEL = "core.User"
 AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend']
 
+LOGIN_REDIRECT_URL = 'nonprofits:organizations'
+LOGOUT_REDIRECT_URL = 'home'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -67,12 +69,12 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-                os.path.join(BASE_DIR, "assogest", "templates"),
-                os.path.join(BASE_DIR, "assogest", "templates",  "assogest"),
-                os.path.join(BASE_DIR, 'core', 'templates', 'core'),
-                os.path.join(BASE_DIR, 'core', 'templates', 'registration'),
-                os.path.join(BASE_DIR, 'nonprofits', 'templates', 'nonprofits'),
-                os.path.join(BASE_DIR, 'users', 'templates', 'registration'),
+            os.path.join(BASE_DIR, "assogest", "templates"),
+            os.path.join(BASE_DIR, "assogest", "templates", "assogest"),
+            os.path.join(BASE_DIR, 'core', 'templates', 'core'),
+            os.path.join(BASE_DIR, 'core', 'templates', 'registration'),
+            os.path.join(BASE_DIR, 'nonprofits', 'templates', 'nonprofits'),
+            os.path.join(BASE_DIR, 'users', 'templates', 'registration'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -89,7 +91,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'assogest.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -99,7 +100,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -119,7 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -131,16 +130,15 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_FINDERS = (
-  'django.contrib.staticfiles.finders.FileSystemFinder',
-  'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-  'compressor.finders.CompressorFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 )
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assogest', 'static'),
@@ -155,9 +153,6 @@ COMPRESS_PRECOMPILERS = (
 COMPRESS_ENABLED = True
 COMPRESS_ROOT = STATIC_ROOT  # django compressor
 COMPRESS_OFFLINE = True
-
-
-
 
 # if not COMPRESS_ENABLED:  # django compressor
 #     COMPRESS_ENABLED = True
