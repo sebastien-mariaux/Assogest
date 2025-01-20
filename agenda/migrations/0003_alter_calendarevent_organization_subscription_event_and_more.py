@@ -5,17 +5,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('agenda', '0002_subscription_remove_eventinscription_event_and_more'),
-        ('nonprofits', '0001_initial'),
+        ('organization', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='calendarevent',
             name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='nonprofits.organization'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization.organization'),
         ),
         migrations.AddField(
             model_name='subscription',
@@ -25,11 +24,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='subscription',
             name='member',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='nonprofits.member'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization.member'),
         ),
         migrations.AddField(
             model_name='calendarevent',
             name='members',
-            field=models.ManyToManyField(related_name='subscriptions', through='agenda.Subscription', to='nonprofits.member'),
+            field=models.ManyToManyField(related_name='subscriptions', through='agenda.Subscription',
+                                         to='organization.member'),
         ),
     ]

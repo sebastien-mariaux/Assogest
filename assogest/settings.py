@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 AUTH_USER_MODEL = "core.User"
 AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend']
 
-LOGIN_REDIRECT_URL = 'nonprofits:organizations'
+LOGIN_REDIRECT_URL = 'organization:organizations'
 LOGOUT_REDIRECT_URL = 'home'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'core',
     'users',
     'agenda',
-    'nonprofits',
+    'organization',
 ]
 
 MIDDLEWARE = [
@@ -73,7 +73,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, "assogest", "templates", "assogest"),
             os.path.join(BASE_DIR, 'core', 'templates', 'core'),
             os.path.join(BASE_DIR, 'core', 'templates', 'registration'),
-            os.path.join(BASE_DIR, 'nonprofits', 'templates', 'nonprofits'),
+            os.path.join(BASE_DIR, 'organization', 'templates', 'organization'),
             os.path.join(BASE_DIR, 'users', 'templates', 'registration'),
         ],
         'APP_DIRS': True,
@@ -147,7 +147,7 @@ STATICFILES_FINDERS = (
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assogest', 'static'),
     os.path.join(BASE_DIR, 'core', 'static'),
-    os.path.join(BASE_DIR, 'nonprofits', 'static'),
+    os.path.join(BASE_DIR, 'organization', 'static'),
     os.path.join(BASE_DIR, 'agenda', 'static'),
 ]
 

@@ -25,12 +25,12 @@ class CalendarEvent(models.Model):
         default=False
     )
     organization = models.ForeignKey(
-        'nonprofits.Organization',
+        'organization.Organization',
         on_delete=models.CASCADE,
         related_name='events'
     )
     members = models.ManyToManyField(
-        'nonprofits.Member',
+        'organization.Member',
         through='Subscription',
         related_name='subscriptions'
     )
@@ -52,7 +52,7 @@ class Subscription(models.Model):
         on_delete=models.CASCADE
     )
     member = models.ForeignKey(
-        'nonprofits.Member',
+        'organization.Member',
         on_delete=models.CASCADE
     )
 

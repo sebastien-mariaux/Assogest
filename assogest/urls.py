@@ -7,5 +7,5 @@ urlpatterns = [
     re_path('^accounts/', include('django.contrib.auth.urls')),
     path('', HomeView.as_view(template_name='home.html'), name='home'),
     path('admin/', admin.site.urls),
-    path('organizations/', include('nonprofits.urls')),
+    path('organizations/', include('organization.urls')),
 ]

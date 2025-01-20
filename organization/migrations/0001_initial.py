@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -20,7 +19,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('events', models.ManyToManyField(through='agenda.Subscription', to='agenda.calendarevent')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                'user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('member', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='nonprofits.member')),
+                ('member', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization.member')),
             ],
         ),
         migrations.CreateModel(
@@ -40,17 +40,19 @@ class Migration(migrations.Migration):
                 ('slug', models.SlugField(max_length=100, unique=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('members', models.ManyToManyField(related_name='individual_organizations', through='nonprofits.Membership', to='nonprofits.member')),
+                ('members',
+                 models.ManyToManyField(related_name='individual_organizations', through='organization.Membership',
+                                        to='organization.member')),
             ],
         ),
         migrations.AddField(
             model_name='membership',
             name='organization',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='nonprofits.organization'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='organization.organization'),
         ),
         migrations.AddField(
             model_name='member',
             name='organizations',
-            field=models.ManyToManyField(through='nonprofits.Membership', to='nonprofits.organization'),
+            field=models.ManyToManyField(through='organization.Membership', to='organization.organization'),
         ),
     ]
