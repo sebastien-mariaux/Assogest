@@ -1,0 +1,1 @@
+./manage.py loaddata seeds/full_data.json

@@ -33,19 +33,36 @@ Next step: Use PostgreSQL
 ### Write seeds
 
 ```bash
+./make_seeds.sh
+```
+
+Or alternatively:
+
+```bash
 ./manage.py dumpdata core > seeds/users.json
 ./manage.py dumpdata organization > seeds/organization.json
-
-./manage.py dumpdata core organization > seeds/full_data.json
+./manage.py dumpdata agenda > seeds/agenda.json
+// OR 
+./manage.py dumpdata core organization agenda > seeds/full_data.json
 ```
 
 ### Load seeds
 
 ```bash
-./manage.py loaddata seeds/users.json
+./load_seeds.sh
 ```
 
-### Users
+Or alternatively:
+
+```bash
+./manage.py loaddata seeds/users.json
+./manage.py loaddata seeds/organization.json
+./manage.py loaddata seeds/agenda.json
+// OR
+./manage.py loaddata seeds/full_data.json
+```
+
+### Users in seeds
 
 - admin@django.com / django1234 (super user)
 - seb@asso.com / django1234
