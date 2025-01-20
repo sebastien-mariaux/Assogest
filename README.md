@@ -22,12 +22,6 @@ source env/bin/activate
 ./pip-freeze.sh
 ```
 
-## Database
-
-Currently the project uses a SQLite database. It is created automatically when running migration
-
-Next step: Use PostgreSQL
-
 ## Seeds
 
 ### Write seeds
