@@ -2,8 +2,12 @@ from django.db import models
 from django.conf import settings
 from django.db.models.signals import post_save
 
+from organization.managers import MemberManager
+
 
 class Member(models.Model):
+    objects = MemberManager()
+
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
@@ -23,7 +27,7 @@ class Member(models.Model):
 
 def create_member(sender, instance, created, **kwargs):
     if created:
-        Member.objects.create(user=instance)
+        Member.objects.create_member(instance)
 
 
 post_save.connect(create_member, sender=settings.AUTH_USER_MODEL)
