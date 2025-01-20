@@ -12,8 +12,15 @@ source env/bin/activate
 # Install the requirements
 ./pip-install.sh
 
+# Create the database 
+./manage.py migrate
+
 # Create the database
 ./manage.py migrate
+
+# Start Redis and Celery
+redis_server
+python -m celery -A assogest worker
 ```
 
 ## Update requirements
