@@ -68,5 +68,8 @@ class Membership(models.Model):
         auto_now=True
     )
 
+    class Meta:
+        unique_together = ('member', 'organization')
+
     def __str__(self):
         return f'{self.member.user.email} - {self.organization.name}'

@@ -1,5 +1,7 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
@@ -46,6 +48,14 @@ class CalendarEvent(models.Model):
         return f"{self.title} - {self.start_time} - {self.end_time}"
 
 
+def validate_member_in_organization(member, organization):
+    if not organization.members.filter(id=member.id).exists():
+        raise ValidationError(
+            _("%(member)s is not in %(organization)s"),
+            params={'member': member.user.email, 'organization': organization.name},
+        )
+
+
 class Subscription(models.Model):
     event = models.ForeignKey(
         CalendarEvent,
@@ -53,12 +63,17 @@ class Subscription(models.Model):
     )
     member = models.ForeignKey(
         'organization.Member',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
     )
-
     created_at = models.DateTimeField(
         auto_now_add=True
     )
     updated_at = models.DateTimeField(
         auto_now=True
     )
+
+    class Meta:
+        unique_together = ('event', 'member')
+
+    def clean(self):
+        validate_member_in_organization(self.member, self.event.organization)
