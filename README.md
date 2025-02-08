@@ -12,15 +12,20 @@ source env/bin/activate
 # Install the requirements
 ./pip-install.sh
 
-# Create the database 
-./manage.py migrate
+# Install npm dependencies
+npm install
+
+# Start Docker services (PostgreSQL and Redis)
+docker-compose up -d
 
 # Create the database
 ./manage.py migrate
 
-# Start Redis and Celery
-redis_server
+# Start Celery worker
 python -m celery -A assogest worker
+
+# Start the development server (in two separate terminals)
+npm run dev
 ```
 
 ## Update requirements
@@ -43,7 +48,7 @@ Or alternatively:
 ./manage.py dumpdata core > seeds/users.json
 ./manage.py dumpdata organization > seeds/organization.json
 ./manage.py dumpdata agenda > seeds/agenda.json
-// OR 
+// OR
 ./manage.py dumpdata core organization agenda > seeds/full_data.json
 ```
 
