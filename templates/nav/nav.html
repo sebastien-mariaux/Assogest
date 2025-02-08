@@ -1,0 +1,24 @@
+{% load i18n static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <!-- Logo -->
+        <a href="{% url 'home' %}" class="navbar-brand">
+            {% comment %} <img src="{% static 'images/logo.png' %}" alt="Logo" class="me-2" height="30"> {% endcomment %}
+            <span class="fw-bold">AssoGest</span>
+        </a>
+
+        <!-- Bouton hamburger pour mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarContent" aria-controls="navbarContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        {% if user.is_authenticated %}
+            {% include 'nav/auth_nav.html' %}
+        {% else %}
+            {% include 'nav/unauth_nav.html' %}
+        {% endif %}
+    </div>
+</nav>
