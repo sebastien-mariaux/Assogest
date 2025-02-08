@@ -15,6 +15,7 @@ class AsyncMailerTest(TestCase):
 
     @patch('services.async_mailer.deliver_email.delay')
     def test_async_send_email_calls_delay(self, mock_delay):
+        """Test that async_send_email correctly queues the email task with proper parameters"""
         async_send_email(**self.email_data)
 
         mock_delay.assert_called_once_with(
@@ -29,6 +30,7 @@ class AsyncMailerTest(TestCase):
         )
 
     def test_deliver_email_sends_email(self):
+        """Test that deliver_email correctly sends the email with the specified parameters"""
         deliver_email(
             subject=self.email_data['subject'],
             message=self.email_data['message'],

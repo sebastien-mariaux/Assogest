@@ -8,6 +8,8 @@ User = get_user_model()
 
 
 class MemberManagerTest(TestCase):
+    """Test suite for the Member model manager"""
+
     def setUp(self):
         post_save.disconnect(create_member, sender=User)
         self.user = User.objects.create_user(
@@ -21,7 +23,7 @@ class MemberManagerTest(TestCase):
 
     @patch('organization.managers.async_send_email')
     def test_create_member_sends_email(self, mock_async_send_email):
-        """Test que la création d'un membre via le manager envoie un email"""
+        """Test that creating a member through the manager sends a welcome email to the user"""
         Member.objects.create_member(self.user)
 
         mock_async_send_email.assert_called_once()
