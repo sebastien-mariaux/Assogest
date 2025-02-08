@@ -5,5 +5,4 @@ static/*
 .idea/*
 /tmp/*
 node_modules
-static/dist/
 /staticfiles/*
