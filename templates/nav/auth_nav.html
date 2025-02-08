@@ -1,0 +1,33 @@
+<!-- Menu principal -->
+<div class="collapse navbar-collapse" id="navbarContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link {% if 'organization' in request.path %}active{% endif %}"
+               href="{% url 'organization:organization-list' %}">Organisations</a>
+        </li>
+    </ul>
+
+    <!-- Menu utilisateur -->
+    <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userMenu"
+               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a class="dropdown-item" href="">Mon profil</a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <form method="post" action="{% url 'logout' %}" class="dropdown-item p-0">
+                        {% csrf_token %}
+                        <button type="submit" class="dropdown-item logout-button">
+                            Déconnexion
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
