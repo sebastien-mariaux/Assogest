@@ -15,14 +15,11 @@ source env/bin/activate
 # Install npm dependencies
 npm install
 
-# Start Docker services (PostgreSQL and Redis)
+# Start Docker services (PostgreSQL, Redis, and Celery)
 docker-compose up -d
 
 # Create the database
 ./manage.py migrate
-
-# Start Celery worker
-python -m celery -A assogest worker
 
 # Start the development server (in two separate terminals)
 npm run dev
@@ -77,4 +74,13 @@ Or alternatively:
 - amy.santiago@b99.com / django1234
 - raymond.holt@b99.com / django1234
 - charles.boyle@b99.com / django1234
+
+## Services
+
+The application uses several services managed through Docker:
+- PostgreSQL as the database
+- Redis as the message broker
+- Celery for asynchronous tasks (email sending)
+
+Development emails are stored in the `tmp/emails/` directory.
 

@@ -165,5 +165,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'tmp', 'emails')
 DEFAULT_FROM_EMAIL = 'contact@assogest.fr'
 
-CELERY_BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
+# Celery Configuration
+# Par défaut 'localhost' si non défini
+REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:6379/0'
+CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:6379/0'
