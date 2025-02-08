@@ -1,11 +1,95 @@
-{% extends "layouts/simple.html" %}
-{% load i18n %}
+{% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-    <h1>Register</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-{% endblock content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm mt-5">
+                <div class="card-body p-4">
+                    <!-- En-tête -->
+                    <div class="text-center mb-4">
+                        <h1 class="h3">Créer un compte</h1>
+                        <p class="text-muted">Rejoignez AssoGest en quelques clics</p>
+                    </div>
+
+                    <!-- Messages d'erreur -->
+                    {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        Veuillez corriger les erreurs ci-dessous.
+                    </div>
+                    {% endif %}
+
+                    <!-- Formulaire -->
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Email -->
+                        <div class="form-floating mb-3">
+                            <input type="email" name="email"
+                                   class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+                                   id="id_email" placeholder="Email"
+                                   value="{{ form.email.value|default:'' }}"
+                                   required>
+                            <label for="id_email">Email</label>
+                            {% if form.email.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.email.errors|join:", " }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-floating mb-3">
+                            <input type="password" name="password1"
+                                   class="form-control {% if form.password1.errors %}is-invalid{% endif %}"
+                                   id="id_password1" placeholder="Mot de passe"
+                                   required>
+                            <label for="id_password1">Mot de passe</label>
+                            {% if form.password1.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.password1.errors|join:", " }}
+                            </div>
+                            {% endif %}
+                            <div class="form-text">
+                                Le mot de passe doit contenir au moins 8 caractères.
+                            </div>
+                        </div>
+
+                        <!-- Password Confirmation -->
+                        <div class="form-floating mb-4">
+                            <input type="password" name="password2"
+                                   class="form-control {% if form.password2.errors %}is-invalid{% endif %}"
+                                   id="id_password2" placeholder="Confirmation du mot de passe"
+                                   required>
+                            <label for="id_password2">Confirmer le mot de passe</label>
+                            {% if form.password2.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.password2.errors|join:", " }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Bouton d'inscription -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Créer mon compte
+                            </button>
+                        </div>
+
+                        <!-- Lien vers la connexion -->
+                        <div class="text-center mt-4">
+                            <p>
+                                Déjà inscrit ?
+                                <a href="{% url 'login' %}" class="text-primary">
+                                    Connectez-vous
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

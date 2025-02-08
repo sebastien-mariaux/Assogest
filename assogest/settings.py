@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 AUTH_USER_MODEL = "core.User"
 AUTHENTICATION_BACKENDS = ['core.backends.EmailBackend']
 
-LOGIN_REDIRECT_URL = 'organization:organizations'
+LOGIN_REDIRECT_URL = 'organization:organization-list'
 LOGOUT_REDIRECT_URL = 'home'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
