@@ -9,8 +9,10 @@ click-repl==0.3.0
 cssmin==0.2.0
 Django==5.1.4
 django-appconf==1.0.6
+django-browser-reload==1.18.0
 django-compressor==4.5.1
 django-libsass==0.9
+django-livereload-server==0.5.1
 jsmin==3.0.1
 kombu==5.4.2
 libsass==0.23.0
@@ -23,6 +25,7 @@ redis==5.2.1
 rjsmin==1.2.2
 six==1.17.0
 sqlparse==0.5.3
+tornado==6.4.2
 tzdata==2024.2
 vine==5.1.0
 wcwidth==0.2.13
