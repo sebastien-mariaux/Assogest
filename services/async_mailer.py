@@ -18,7 +18,6 @@ def async_send_email(subject,
     """
     if from_email is None:
         from_email = settings.DEFAULT_FROM_EMAIL
-
     deliver_email.delay(
         subject=subject,
         message=message,
