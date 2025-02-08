@@ -4,3 +4,6 @@ static/*
 /assogest/static/CACHE/*
 .idea/*
 /tmp/*
+node_modules
+static/dist/
+/staticfiles/*

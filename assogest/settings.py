@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "compressor",
     "cssmin",
     "jsmin",
     'core',
@@ -69,11 +68,13 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            BASE_DIR / 'templates',
             os.path.join(BASE_DIR, "assogest", "templates"),
             os.path.join(BASE_DIR, "assogest", "templates", "assogest"),
             os.path.join(BASE_DIR, 'core', 'templates', 'core'),
             os.path.join(BASE_DIR, 'core', 'templates', 'registration'),
-            os.path.join(BASE_DIR, 'organization', 'templates', 'organization'),
+            os.path.join(BASE_DIR, 'organization',
+                         'templates', 'organization'),
             os.path.join(BASE_DIR, 'users', 'templates', 'registration'),
         ],
         'APP_DIRS': True,
@@ -137,31 +138,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_FINDERS = (
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
-)
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'assogest', 'static'),
-    os.path.join(BASE_DIR, 'core', 'static'),
-    os.path.join(BASE_DIR, 'organization', 'static'),
-    os.path.join(BASE_DIR, 'agenda', 'static'),
 ]
 
-COMPRESS_PRECOMPILERS = (
-    ('text/x-scss', 'django_libsass.SassCompiler'),
-)
-COMPRESS_ENABLED = True
-COMPRESS_ROOT = STATIC_ROOT  # django compressor
-COMPRESS_OFFLINE = True
 
-# if not COMPRESS_ENABLED:  # django compressor
-#     COMPRESS_ENABLED = True
-#     COMPRESS_CSS_FILTERS = ["compressor.filters.cssmin.CSSMinFilter"]
-#     COMPRESS_JS_FILTERS = ["compressor.filters.jsmin.JSMinFilter"]
+# Configuration du mode développement
+if DEBUG:
+    INTERNAL_IPS = [
+        "127.0.0.1",
+    ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

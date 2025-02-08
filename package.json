@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "dev": "webpack --watch --mode development",
+    "build": "webpack --mode production",
+    "start": "concurrently \"python manage.py runserver\" \"npm run dev\""
+  }
+} 
