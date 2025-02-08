@@ -1,4 +1,3 @@
-
 # Create your views here.
 from django.db.models import Count
 from django.views.generic import ListView, DetailView
@@ -21,17 +20,21 @@ class OrganizationsListView(ListView, LoginRequiredMixin):
 
 class OrganizationDetailView(DetailView):
     model = Organization
-    context_object_name = 'organization'
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
 
     def get_queryset(self):
-        return Organization.objects.filter(
-            members=self.request.user.member,
-            slug=self.kwargs['slug']
+        return Organization.objects.annotate(
+            members_count=Count('members')
         )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['events'] = self.object.events.order_by('start_time')[:5]
+        context['active_tab'] = 'overview'
         return context
+
+    def get_queryset(self):
+        return Organization.objects.annotate(
+            members_count=Count('members')
+        )
