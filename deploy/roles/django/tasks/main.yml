@@ -1,0 +1,4 @@
+- name: Copy docker-compose configuration
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ app_path }}/docker-compose.yml"

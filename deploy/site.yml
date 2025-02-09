@@ -1,0 +1,41 @@
+---
+- name: Deploy AssoGest
+  hosts: all
+  become: yes
+  become_method: sudo
+
+  pre_tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      become: yes
+
+  roles:
+    - role: common
+      tags: ['common', 'setup']
+
+    - role: nginx
+      tags: ['nginx', 'web']
+
+    - role: django
+      tags: ['django', 'app']
+
+  post_tasks:
+    - name: Ensure all services are started
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - nginx
+        - docker.service
+      become: yes
+
+    - name: Check application status
+      uri:
+        url: "http://{{ domain_name }}"
+        return_content: yes
+      register: app_status
+      ignore_errors: yes
+      tags: ['check']
