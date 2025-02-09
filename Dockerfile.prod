@@ -1,7 +1,19 @@
 FROM python:3.13
 WORKDIR /app
+
+# Installer les dépendances
 COPY requirements.txt .
 RUN pip install -r requirements.txt gunicorn
+
+# Copier le code source
 COPY . .
+
+# S'assurer que le dossier settings est un package Python
+RUN test -f assogest/settings/__init__.py || touch assogest/settings/__init__.py
+
+# Configuration de l'environnement
+ENV PYTHONPATH=/app
 ENV DJANGO_SETTINGS_MODULE=assogest.settings.production
+
+# Point d'entrée par défaut
 CMD ["gunicorn", "assogest.wsgi:application", "--bind", "0.0.0.0:8000"] 
