@@ -1,52 +1,71 @@
+version: '3.8'
+
 services:
   db:
-    image: postgres
+    image: postgres:17
     env_file: .env
+    environment:
+      - POSTGRES_DB={{ db_name }}
+      - POSTGRES_USER={{ db_user }}
+      - POSTGRES_PASSWORD={{ db_password }}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U {{ db_user }}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
-    image: redis:latest
+    image: redis:alpine
+    networks:
+      - default
 
   web:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    ports:
-      - "8000:8000"
+    command: gunicorn assogest.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120
     volumes:
       - .:/app
       - ./staticfiles:/app/staticfiles
       - ./media:/app/media
-    env_file:
-      - .env
+    ports:
+      - "127.0.0.1:8000:8000"
     environment:
-      - DB_HOST=db
-      - REDIS_HOST=redis
+      - POSTGRES_DB={{ db_name }}
+      - POSTGRES_USER={{ db_user }}
+      - POSTGRES_PASSWORD={{ db_password }}
+      - DATABASE_URL=postgresql://{{ db_user }}:{{ db_password }}@db:5432/{{ db_name }}
+      - DJANGO_SETTINGS_MODULE=assogest.settings.production
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+    networks:
+      - default
 
   celery:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    command: bash -c "cd /app && celery -A assogest worker --loglevel=info"
-    env_file: .env
-    environment:
-      - DJANGO_SETTINGS_MODULE=assogest.settings.production
-      - REDIS_HOST=redis
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
-      - DB_HOST=db
-      - PYTHONPATH=/app
+    command: celery -A assogest worker -l info
     volumes:
-      - ./tmp/emails:/app/tmp/emails
+      - .:/app
+    env_file: .env
     depends_on:
-      - redis
       - db
+      - redis
+    networks:
+      - default
 
 volumes:
   postgres_data:
   static_volume:
   media_volume:
+
+networks:
+  default:
+    name: assogest_network
+    external: true

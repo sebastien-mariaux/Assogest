@@ -43,3 +43,16 @@
   command: certbot --nginx -d {{ domain_name }} --non-interactive --agree-tos --email your@email.com
   args:
     creates: "/etc/letsencrypt/live/{{ domain_name }}"
+
+- name: Create Docker network
+  community.docker.docker_network:
+    name: assogest_network
+    state: present
+    driver: bridge
+
+- name: Connect Nginx container to network
+  community.docker.docker_network:
+    name: assogest_network
+    connected:
+      - nginx
+    state: present
