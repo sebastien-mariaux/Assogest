@@ -36,24 +36,20 @@
 
 - name: Start Docker Compose services
   community.docker.docker_compose_v2:
-    project_src: "{{ project_path }}"
+    project_src: "{{ app_path }}"
     files:
       - docker-compose.yml
     state: present
-  register: output
+  become: true
 
 - name: Wait for database to be ready
-  wait_for:
-    host: localhost
-    port: 5432
-    timeout: 30
-    delay: 10
-  when: output.changed
-
-- name: Run database migrations
-  command: docker compose exec -T web python manage.py migrate
+  command: docker compose exec -T web pg_isready -h db -U postgres
   args:
     chdir: "{{ app_path }}"
+  register: result
+  until: result.rc == 0
+  retries: 30
+  delay: 10
   become: true
 
 - name: Install Node.js dependencies
@@ -73,3 +69,13 @@
   args:
     chdir: "{{ app_path }}"
   become: true
+  retries: 3
+  delay: 10
+
+- name: Run database migrations
+  command: docker compose exec -T web python manage.py migrate
+  args:
+    chdir: "{{ app_path }}"
+  become: true
+  retries: 3
+  delay: 10

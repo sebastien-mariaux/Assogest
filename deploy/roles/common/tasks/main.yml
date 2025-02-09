@@ -65,3 +65,19 @@
     name: docker
     state: started
     enabled: yes
+
+- name: Install Node.js repository
+  shell: |
+    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+  args:
+    creates: /etc/apt/sources.list.d/nodesource.list
+  become: true
+
+- name: Install Node.js and npm
+  apt:
+    name:
+      - nodejs
+      - build-essential
+    state: present
+    update_cache: yes
+  become: true
