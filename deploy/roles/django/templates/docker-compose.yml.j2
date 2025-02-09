@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:17
@@ -11,7 +9,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - default
+      - assogest_network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U {{ db_user }}"]
       interval: 5s
@@ -21,7 +19,7 @@ services:
   redis:
     image: redis:alpine
     networks:
-      - default
+      - assogest_network
 
   web:
     build:
@@ -38,13 +36,12 @@ services:
       - POSTGRES_DB={{ db_name }}
       - POSTGRES_USER={{ db_user }}
       - POSTGRES_PASSWORD={{ db_password }}
-      - DATABASE_URL=postgresql://{{ db_user }}:{{ db_password }}@db:5432/{{ db_name }}
       - DJANGO_SETTINGS_MODULE=assogest.settings.production
     depends_on:
       db:
         condition: service_healthy
     networks:
-      - default
+      - assogest_network
 
   celery:
     build:
@@ -58,7 +55,7 @@ services:
       - db
       - redis
     networks:
-      - default
+      - assogest_network
 
 volumes:
   postgres_data:
@@ -66,6 +63,5 @@ volumes:
   media_volume:
 
 networks:
-  default:
-    name: assogest_network
+  assogest_network:
     external: true
