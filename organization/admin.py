@@ -20,5 +20,11 @@ class MemberAdmin(admin.ModelAdmin):
     inlines = [UserOrganizationInline]
 
 
+class MembershipAdmin(admin.ModelAdmin):
+    model = Membership
+    list_display = ['member', 'organization', 'is_admin']
+
+
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(Member, MemberAdmin)
+admin.site.register(Membership, MembershipAdmin)
