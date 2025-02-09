@@ -69,7 +69,7 @@ class RegistrationViewTest(TestCase):
         """Test that the registration page loads correctly and uses the proper template"""
         response = self.client.get(self.register_url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'register.html')
+        self.assertTemplateUsed(response, 'registration/register.html')
 
     def test_successful_registration(self):
         """Test that users can register successfully and are redirected to login"""
@@ -154,3 +154,31 @@ class LogoutViewTest(TestCase):
         """Test that GET requests to logout view are not allowed"""
         response = self.client.get(self.logout_url)
         self.assertEqual(response.status_code, 405)
+
+
+class PasswordResetViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.password_reset_url = reverse('password_reset')
+        self.login_url = reverse('login')
+
+    def test_password_reset_page_loads(self):
+        """Test that the password reset page loads correctly and uses the proper template"""
+        response = self.client.get(self.password_reset_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/password_reset_form.html')
+        self.assertTemplateUsed(response, 'layouts/simple.html')
+
+    def test_password_reset_done_page_loads(self):
+        """Test that the password reset done page loads correctly and uses the proper template"""
+        response = self.client.get(reverse('password_reset_done'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/password_reset_done.html')
+
+    def test_password_reset_form_submission(self):
+        """Test that the password reset form submission works correctly"""
+        response = self.client.post(self.password_reset_url, {
+            'email': 'test@example.com'
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertTemplateUsed(response, 'registration/password_reset_done.html')

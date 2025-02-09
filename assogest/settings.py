@@ -46,8 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "cssmin",
     "jsmin",
+    "debug_toolbar",
     'core',
-    'users',
     'agenda',
     'organization',
 ]
@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'assogest.urls'
@@ -68,14 +69,11 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates',
+            os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, "assogest", "templates"),
             os.path.join(BASE_DIR, "assogest", "templates", "assogest"),
-            os.path.join(BASE_DIR, 'core', 'templates', 'core'),
-            os.path.join(BASE_DIR, 'core', 'templates', 'registration'),
             os.path.join(BASE_DIR, 'organization',
                          'templates', 'organization'),
-            os.path.join(BASE_DIR, 'users', 'templates', 'registration'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

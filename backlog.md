@@ -11,7 +11,7 @@ CA :
 - Je vois le nom et la présentation du site
 - Je vois les boutons de login et d'inscription
 
-## Inscription
+## Inscription OK
 
 En tant qu'utilisateur non connecté
 Je peux accéder au formulaire d'inscription
@@ -25,7 +25,7 @@ CA :
 - Je suis redirigé vers la page de login
 - Je reçois un email de confirmation
 
-## Login
+## Login OK
 
 En tant qu'utilisateur non connecté
 Je peux accéder au formulaire de login
@@ -36,9 +36,9 @@ CA :
 - Je vois un formulaire de login
 - Je peux saisir mon email et mot de passe
 - Je peux valider le formulaire
-- Je suis redirigé vers ... (profile / page d'accueil interne...)  TBD
+- Je suis redirigé vers page organisations
 
-## Logout
+## Logout OK
 
 En tant qu'utilisateur connecté
 Je peux me déconnecter
@@ -55,7 +55,7 @@ CA :
 En tant qu'utilisateur non connecté
 Je peux accéder au formulaire de mot de passe oublié
 Afin de recevoir un email de réinitialisation
-
+$$
 CA
 
 - Je vois un lien "mot de passe oublié"
@@ -97,7 +97,7 @@ CA
 
 ## Administration d'une organisation
 
-En tant qu'admin d'une organisation  
+En tant qu'admin d'une organisation
 Je peux accéder à l'interface d'administration de mon organisation
 Afin de gérer les utilisateurs et les données de mon organisation
 
