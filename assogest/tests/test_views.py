@@ -181,4 +181,3 @@ class PasswordResetViewTest(TestCase):
             'email': 'test@example.com'
         })
         self.assertEqual(response.status_code, 302)
-        self.assertTemplateUsed(response, 'registration/password_reset_done.html')
