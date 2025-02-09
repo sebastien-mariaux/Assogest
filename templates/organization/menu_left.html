@@ -11,10 +11,10 @@
        class="list-group-item list-group-item-action {% if active_tab == 'members' %}active{% endif %}">
         <i class="fas fa-users me-2"></i>Membres
     </a>
-    {% if user == organization.owner %}
-    <a href=""
+    {% if is_admin %}
+    <a href="{% url 'organization:organization-admin' organization.slug %}"
        class="list-group-item list-group-item-action {% if active_tab == 'settings' %}active{% endif %}">
-        <i class="fas fa-cog me-2"></i>Paramètres
+        <i class="fas fa-cog me-2"></i>Admin
     </a>
     {% endif %}
 </div>

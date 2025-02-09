@@ -72,7 +72,7 @@ Or alternatively:
 - jake.peralta@asso.com / django1234
 - rosa.diaz@b99.com / django1234
 - amy.santiago@b99.com / django1234
-- raymond.holt@b99.com / django1234
+- raymond.holt@b99.com / django1234 (organization admin)
 - charles.boyle@b99.com / django1234
 
 ## Services

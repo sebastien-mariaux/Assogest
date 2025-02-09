@@ -1,1 +1,18 @@
-test
+{% extends "layouts/organization.html" %}
+{% load i18n %}
+
+{% block organization_content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">
+            <i class="fas fa-cog me-2"></i>Admin
+        </h5>
+        <a href="{% url 'organization:organization-detail' organization.slug %}" class="btn btn-sm btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>{% trans "Back to organization" %}
+        </a>
+    </div>
+    <div class="card-body">
+        {% include "organization/organization_admin_content.html" %}
+    </div>
+</div>
+{% endblock %}

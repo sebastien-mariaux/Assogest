@@ -95,7 +95,7 @@ CA
 - Je peux modifier une donnée
 - Je peux supprimer une donnée
 
-## Administration d'une organisation
+## Administration d'une organisation OK
 
 En tant qu'admin d'une organisation
 Je peux accéder à l'interface d'administration de mon organisation

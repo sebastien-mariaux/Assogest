@@ -21,7 +21,7 @@ class OrganizationsListView(ListView, LoginRequiredMixin):
     # TODO: if only one organization, redirect to organization detail view
 
 
-class OrganizationDetailView(DetailView):
+class OrganizationDetailView(LoginRequiredMixin, DetailView):
     model = Organization
     slug_field = 'slug'
     slug_url_arg = 'slug'
@@ -35,6 +35,7 @@ class OrganizationDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['events'] = self.object.events.order_by('start_time')[:5]
         context['active_tab'] = 'overview'
+        context['is_admin'] = self.object.memberships.filter(member=self.request.user.member, is_admin=True).exists()
         return context
 
 
@@ -62,5 +63,6 @@ class OrganizationAdminView(LoginRequiredMixin, View):
 
         context = {
             'organization': organization,
+            'is_admin': True
         }
         return render(request, self.template_name, context)
