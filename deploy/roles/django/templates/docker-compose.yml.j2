@@ -30,10 +30,13 @@ services:
       - redis
 
   celery:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
     command: celery -A assogest worker --loglevel=info
     env_file: .env
     environment:
+      - DJANGO_SETTINGS_MODULE=assogest.settings.production
       - REDIS_HOST=redis
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
