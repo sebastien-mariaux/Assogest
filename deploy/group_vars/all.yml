@@ -1,0 +1,12 @@
+project_name: assogest
+domain_name: assogest.sebastien-mariaux.com
+project_path: "/home/{{ ansible_user }}/www/{{ project_name }}"
+app_path: "{{ project_path }}"
+
+nginx_config_path: "/etc/nginx/sites-available"
+nginx_enabled_path: "/etc/nginx/sites-enabled"
+
+db_name: assogest
+db_user: assogest
+
+certbot_email: sebastien.mariaux.dev@proton.me
