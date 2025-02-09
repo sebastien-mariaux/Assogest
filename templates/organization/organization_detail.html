@@ -1,0 +1,78 @@
+{% extends "layouts/organization.html" %}
+{% load i18n %}
+
+{% block organization_content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">
+            <i class="fas fa-calendar me-2"></i>Événements
+        </h5>
+        {% if user in organization.members.all %}
+            <a href=""
+               class="btn btn-primary btn-sm">
+                <i class="fas fa-plus me-2"></i>Nouvel événement
+            </a>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        {% if events %}
+            <div class="list-group list-group-flush">
+                {% for event in events %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">{{ event.title }}</h6>
+                                <p class="text-muted small mb-0">
+                                    <i class="fas fa-clock me-1"></i>
+                                    {{ event.start_date|date:"d/m/Y H:i" }}
+                                    {% if event.end_date %}
+                                        - {{ event.end_date|date:"d/m/Y H:i" }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <a href=""
+                               class="btn btn-outline-primary btn-sm">
+                                Voir plus
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if is_paginated %}
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                    Précédent
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                    Suivant
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        {% else %}
+            <div class="text-center py-4">
+                <p class="text-muted mb-0">
+                    Aucun événement n'a encore été créé pour cette organisation.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

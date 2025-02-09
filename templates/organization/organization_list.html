@@ -1,0 +1,87 @@
+{% extends "layouts/simple.html" %}
+{% load static %}
+
+{% block title %}
+   {{SITE_TITLE}} | Organisations
+{% endblock title %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- En-tête -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-0">Organisations</h1>
+            <p class="text-muted">Découvrez toutes les associations</p>
+        </div>
+    </div>
+
+    <!-- Liste des organisations -->
+    <div class="row g-4">
+        {% for organization in organization_list %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                {% if organization.logo %}
+                <img src="{{ organization.logo.url }}" class="card-img-top" alt="{{ organization.name }}">
+                {% else %}
+                <div class="card-img-top bg-light text-center py-4">
+                    <i class="fas fa-building fa-3x text-muted"></i>
+                </div>
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ organization.name }}</h5>
+                    <p class="card-text text-muted">
+                        {{ organization.description|truncatewords:20 }}
+                    </p>
+                </div>
+
+                <div class="card-footer bg-transparent border-top-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            <i class="fas fa-users me-2"></i>{{ organization.members_count }} membres
+                        </small>
+                        <a href="{% url 'organization:organization-detail' organization.slug %}"
+                           class="btn btn-outline-primary btn-sm">
+                            Voir plus
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center" role="alert">
+                <i class="fas fa-info-circle me-2"></i>
+                Aucune organisation n'a encore été créée.
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Précédent</a>
+            </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Suivant</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}
