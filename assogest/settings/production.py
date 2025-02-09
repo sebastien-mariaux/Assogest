@@ -8,6 +8,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    'assogest.sebastien-mariaux.com',
     os.getenv('DOMAIN_NAME', ''),
 ]
 
