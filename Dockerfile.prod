@@ -18,7 +18,7 @@ WORKDIR /app
 COPY requirements.txt package*.json ./
 
 # Installer les dépendances Python et Node.js
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt gunicorn
 RUN npm install
 
 # Copier le reste du code
