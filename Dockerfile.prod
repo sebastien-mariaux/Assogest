@@ -21,12 +21,14 @@ CMD ["gunicorn", "assogest.wsgi:application", "--bind", "0.0.0.0:8000"]
 # Copier le code de l'application
 COPY . /app/
 
-# Installer Node.js et npm pour sass
+# Installer Node.js et npm
 RUN apt-get update && apt-get install -y npm && \
-    npm install -g sass && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Compiler le SCSS
-RUN mkdir -p /app/static/dist/css/ && \
-    sass /app/static/src/scss/main.scss:/app/static/dist/css/styles.css --style compressed 
+# Installer les dépendances npm et construire les assets
+COPY package*.json /app/
+RUN npm install
+
+COPY . /app/
+RUN npm run build
