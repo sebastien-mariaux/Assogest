@@ -34,9 +34,16 @@
     mode: '0600'
   become: false
 
-- name: Check application status
-  uri:
-    url: "http://{{ domain_name }}"
-    return_content: yes
-  register: app_status
-  ignore_errors: true  # Ignorer l'erreur au premier déploiement
+- name: Run Django migrations
+  community.docker.docker_container_exec:
+    container: "{{ project_name }}-web-1"
+    command: python manage.py migrate
+  register: migration_result
+  changed_when: migration_result.stdout != ""
+
+- name: Collect static files
+  community.docker.docker_container_exec:
+    container: "{{ project_name }}-web-1"
+    command: python manage.py collectstatic --noinput
+  register: static_result
+  changed_when: static_result.stdout != ""

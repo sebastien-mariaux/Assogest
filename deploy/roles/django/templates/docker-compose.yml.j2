@@ -47,6 +47,7 @@ services:
     depends_on:
       - redis
       - db
+    user: nobody
 
 volumes:
   postgres_data:
