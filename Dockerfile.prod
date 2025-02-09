@@ -19,13 +19,15 @@ COPY requirements.txt package*.json ./
 
 # Installer les dépendances Python et Node.js
 RUN pip install --no-cache-dir -r requirements.txt gunicorn
-RUN npm install
+RUN npm install --include=dev
 
 # Copier le reste du code
 COPY . .
 
 # Compiler les assets
-RUN npm run build
+RUN mkdir -p static/dist/ && \
+    npm run build && \
+    python manage.py collectstatic --noinput
 
 # Exposer le port
 EXPOSE 8000
