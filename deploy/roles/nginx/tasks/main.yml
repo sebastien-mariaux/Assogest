@@ -1,9 +1,12 @@
 ---
-- name: Install Nginx
+- name: Install Nginx and Certbot
   apt:
-    name: nginx
+    name:
+      - nginx
+      - certbot
+      - python3-certbot-nginx
     state: present
-    update_cache: no  # On ne met pas à jour le cache ici car déjà fait
+    update_cache: yes
 
 - name: Remove default Nginx configuration
   file:
@@ -13,15 +16,16 @@
 - name: Create Nginx configuration
   template:
     src: nginx.conf.j2
-    dest: /etc/nginx/sites-available/{{ app_name }}
-  notify: reload nginx
+    dest: "{{ nginx_config_path }}/{{ project_name }}"
+    mode: '0644'
+  notify: Restart Nginx
 
-- name: Enable site configuration
+- name: Enable site
   file:
-    src: /etc/nginx/sites-available/{{ app_name }}
-    dest: /etc/nginx/sites-enabled/{{ app_name }}
+    src: "{{ nginx_config_path }}/{{ project_name }}"
+    dest: "{{ nginx_enabled_path }}/{{ project_name }}"
     state: link
-  notify: reload nginx
+  notify: Restart Nginx
 
 - name: Create Nginx cache directory
   file:
@@ -34,3 +38,8 @@
     name: nginx
     state: started
     enabled: yes
+
+- name: Obtain SSL certificate
+  command: certbot --nginx -d {{ domain_name }} --non-interactive --agree-tos --email your@email.com
+  args:
+    creates: "/etc/letsencrypt/live/{{ domain_name }}"
