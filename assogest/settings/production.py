@@ -1,16 +1,15 @@
 import os
 from .base import *
 
-# Debug temporaire
-print("Database connection parameters:")
-print(f"NAME: {os.getenv('DB_NAME')}")
-print(f"USER: {os.getenv('DB_USER')}")
-print(f"PASSWORD: {'*' * len(os.getenv('DB_PASSWORD', ''))}")
-print(f"HOST: {os.getenv('DB_HOST')}")
-print(f"PORT: {os.getenv('DB_PORT')}")
 
 DEBUG = False
-ALLOWED_HOSTS = [os.getenv('DOMAIN_NAME')]
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    os.getenv('DOMAIN_NAME', ''),
+]
 
 DATABASES = {
     'default': {
@@ -23,8 +22,13 @@ DATABASES = {
     }
 }
 
-# Sécurité supplémentaire pour la production
+# Paramètres de sécurité
+SECURE_HSTS_SECONDS = 31536000  # 1 an
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'

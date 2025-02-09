@@ -34,7 +34,23 @@
     mode: '0600'
   become: false
 
-- name: Run Django migrations
+- name: Start Docker Compose services
+  community.docker.docker_compose_v2:
+    project_src: "{{ project_path }}"
+    files:
+      - docker-compose.yml
+    state: present
+  register: output
+
+- name: Wait for database to be ready
+  wait_for:
+    host: localhost
+    port: 5432
+    timeout: 30
+    delay: 10
+  when: output.changed
+
+- name: Run database migrations
   community.docker.docker_container_exec:
     container: "{{ project_name }}-web-1"
     command: python manage.py migrate
