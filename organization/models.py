@@ -59,11 +59,16 @@ class Organization(models.Model):
 class Membership(models.Model):
     member = models.ForeignKey(
         'Member',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='memberships'
     )
     organization = models.ForeignKey(
         'Organization',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='memberships'
+    )
+    is_admin = models.BooleanField(
+        default=False
     )
     created_at = models.DateTimeField(
         auto_now_add=True

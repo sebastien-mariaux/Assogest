@@ -50,12 +50,12 @@ CA :
 - Je peux cliquer sur le bouton
 - Je suis redirigé vers la page d'accueil
 
-## Mot de passe oublié
+## Mot de passe oublié OK
 
 En tant qu'utilisateur non connecté
 Je peux accéder au formulaire de mot de passe oublié
 Afin de recevoir un email de réinitialisation
-$$
+
 CA
 
 - Je vois un lien "mot de passe oublié"
