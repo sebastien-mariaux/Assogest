@@ -4,10 +4,12 @@
     {% include "organization/menu_left.html" %}
 {% endblock %}
 
-{% block main_content %}
-    {% block organization_content %}{% endblock %}
-{% endblock %}
+{% block title %}AssoGest | {{organization.name}}{% endblock %}
 
 {% block header %}
 <h1>{{organization.name}}</h1>
 {% endblock header %}
+
+{% block main_content %}
+    {% block organization_content %}{% endblock %}
+{% endblock %}
