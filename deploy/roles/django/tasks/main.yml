@@ -51,15 +51,25 @@
   when: output.changed
 
 - name: Run database migrations
-  community.docker.docker_container_exec:
-    container: "{{ project_name }}-web-1"
-    command: python manage.py migrate
-  register: migration_result
-  changed_when: migration_result.stdout != ""
+  command: docker compose exec -T web python manage.py migrate
+  args:
+    chdir: "{{ app_path }}"
+  become: true
+
+- name: Install Node.js dependencies
+  command: npm install --include=dev
+  args:
+    chdir: "{{ app_path }}"
+  become: true
+
+- name: Build assets
+  command: npm run build
+  args:
+    chdir: "{{ app_path }}"
+  become: true
 
 - name: Collect static files
-  community.docker.docker_container_exec:
-    container: "{{ project_name }}-web-1"
-    command: python manage.py collectstatic --noinput
-  register: static_result
-  changed_when: static_result.stdout != ""
+  command: docker compose exec -T web python manage.py collectstatic --noinput
+  args:
+    chdir: "{{ app_path }}"
+  become: true

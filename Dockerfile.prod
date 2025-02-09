@@ -14,20 +14,15 @@ RUN apt-get update && \
 # Créer et définir le répertoire de travail
 WORKDIR /app
 
-# Copier les fichiers de dépendances
-COPY requirements.txt package*.json ./
-
-# Installer les dépendances Python et Node.js
+# Copier les fichiers de dépendances et installer les dépendances Python
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt gunicorn
-RUN npm install --include=dev
 
 # Copier le reste du code
 COPY . .
 
-# Compiler les assets
-RUN mkdir -p static/dist/ && \
-    npm run build && \
-    python manage.py collectstatic --noinput
+# Créer le dossier pour les fichiers statiques
+RUN mkdir -p static/dist/
 
 # Exposer le port
 EXPOSE 8000
