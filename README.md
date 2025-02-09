@@ -93,9 +93,19 @@ Edit secrets
 cd deploy && ansible-vault edit group_vars/all/vault.yml
 ```
 
+Decrypt vault
+```bash
+cd deploy && ansible-vault decrypt group_vars/all/vault.yml
+```
+
 Show secrets
 ```bash
 cd deploy && ansible-vault view group_vars/all/vault.yml
+```
+
+Encrypt vault
+```bash
+cd deploy && ansible-vault encrypt group_vars/all/vault.yml
 ```
 
 ### Deploy

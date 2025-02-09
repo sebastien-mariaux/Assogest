@@ -18,6 +18,8 @@
     - role: nginx
       tags: ['nginx', 'web']
 
+    - role: docker
+
     - role: django
       tags: ['django', 'app']
 

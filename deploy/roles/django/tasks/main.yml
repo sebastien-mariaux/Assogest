@@ -1,4 +1,42 @@
+- name: Ensure www directory exists in home
+  file:
+    path: /home/debian/www
+    state: directory
+    mode: '0755'
+    owner: debian
+    group: debian
+
+- name: Create application directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    owner: debian
+    group: debian
+  loop:
+    - "{{ app_path }}"
+    - "{{ app_path }}/tmp"
+    - "{{ app_path }}/tmp/emails"
+    - "{{ app_path }}/media"
+    - "{{ app_path }}/staticfiles"
+
 - name: Copy docker-compose configuration
   template:
     src: docker-compose.yml.j2
     dest: "{{ app_path }}/docker-compose.yml"
+    mode: '0644'
+  become: false
+
+- name: Create .env file for production
+  template:
+    src: env.j2
+    dest: "{{ app_path }}/.env"
+    mode: '0600'
+  become: false
+
+- name: Check application status
+  uri:
+    url: "http://{{ domain_name }}"
+    return_content: yes
+  register: app_status
+  ignore_errors: true  # Ignorer l'erreur au premier déploiement
