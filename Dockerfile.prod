@@ -1,12 +1,37 @@
-FROM python:3.13
+FROM python:3.13-slim
+
+# Installer les dépendances système et Node.js
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    libpq-dev \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Créer et définir le répertoire de travail
 WORKDIR /app
 
-# Installer les dépendances
-COPY requirements.txt .
-RUN pip install -r requirements.txt gunicorn
+# Copier les fichiers de dépendances
+COPY requirements.txt package*.json ./
 
-# Copier le code source
+# Installer les dépendances Python et Node.js
+RUN pip install --no-cache-dir -r requirements.txt
+RUN npm install
+
+# Copier le reste du code
 COPY . .
+
+# Compiler les assets
+RUN npm run build
+
+# Exposer le port
+EXPOSE 8000
+
+# Commande par défaut
+CMD ["gunicorn", "assogest.wsgi:application", "--bind", "0.0.0.0:8000"]
 
 # S'assurer que le dossier settings est un package Python
 RUN test -f assogest/settings/__init__.py || touch assogest/settings/__init__.py
@@ -15,20 +40,5 @@ RUN test -f assogest/settings/__init__.py || touch assogest/settings/__init__.py
 ENV PYTHONPATH=/app
 ENV DJANGO_SETTINGS_MODULE=assogest.settings.production
 
-# Point d'entrée par défaut
-CMD ["gunicorn", "assogest.wsgi:application", "--bind", "0.0.0.0:8000"]
-
 # Copier le code de l'application
 COPY . /app/
-
-# Installer Node.js et npm
-RUN apt-get update && apt-get install -y npm && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Installer les dépendances npm et construire les assets
-COPY package*.json /app/
-RUN npm install
-
-COPY . /app/
-RUN npm run build
