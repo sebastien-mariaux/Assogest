@@ -25,6 +25,7 @@ services:
     environment:
       - DB_HOST=db
       - REDIS_HOST=redis
+      - DJANGO_SETTINGS_MODULE=assogest.settings.production
     depends_on:
       - db
       - redis
