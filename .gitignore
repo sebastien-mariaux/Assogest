@@ -6,3 +6,5 @@ static/*
 /tmp/*
 node_modules
 /staticfiles/*
+/.vault_pass
+/deploy/.vault_pass

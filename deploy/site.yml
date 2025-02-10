@@ -1,0 +1,63 @@
+---
+- name: Deploy AssoGest
+  hosts: all
+  become: true
+  become_method: sudo
+  vars_files:
+    - group_vars/all.yml
+    - group_vars/vault.yml
+
+  pre_tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      become: true
+
+    - name: Check application status
+      uri:
+        url: "https://{{ domain_name }}"
+        validate_certs: yes
+        return_content: yes
+        follow_redirects: all
+        status_code: [200, 301, 302]
+      register: app_status
+      ignore_errors: true
+
+  roles:
+    - role: common
+      tags: ['common', 'setup']
+
+    - role: nginx
+      tags: ['nginx', 'web']
+
+    - role: docker
+
+    - role: django
+      tags: ['django', 'app']
+
+  post_tasks:
+    - name: Ensure all services are started
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - nginx
+        - docker.service
+      become: true
+
+    - name: Verify application is running
+      uri:
+        url: "https://{{ domain_name }}"
+        validate_certs: yes
+        return_content: yes
+        follow_redirects: all
+        status_code: [200]
+      register: final_status
+      ignore_errors: yes
+
+    - name: Display application status
+      debug:
+        msg: "Application status: {{ final_status.status }}"
+      when: final_status is success

@@ -84,3 +84,35 @@ The application uses several services managed through Docker:
 
 Development emails are stored in the `tmp/emails/` directory.
 
+## Deploy with Ansible
+
+```bash
+source ansible-env/bin/activate
+
+### Vault password
+
+Edit secrets
+```bash
+cd deploy && ansible-vault edit group_vars/all/vault.yml
+```
+
+Decrypt vault
+```bash
+cd deploy && ansible-vault decrypt group_vars/all/vault.yml
+```
+
+Show secrets
+```bash
+cd deploy && ansible-vault view group_vars/all/vault.yml
+```
+
+Encrypt vault
+```bash
+cd deploy && ansible-vault encrypt group_vars/all/vault.yml
+```
+
+### Deploy
+
+```bash
+cd deploy && ansible-playbook site.yml
+```

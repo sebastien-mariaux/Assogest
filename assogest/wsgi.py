@@ -11,6 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'assogest.settings')
+# Utilise local par défaut, peut être surchargé par l'environnement
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'assogest.settings.local')
 
 application = get_wsgi_application()

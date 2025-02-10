@@ -1,0 +1,86 @@
+- name: Ensure www directory exists in home
+  file:
+    path: /home/debian/www
+    state: directory
+    mode: '0755'
+    owner: debian
+    group: debian
+
+- name: Create application directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+    owner: debian
+    group: debian
+  loop:
+    - "{{ app_path }}"
+    - "{{ app_path }}/tmp"
+    - "{{ app_path }}/tmp/emails"
+    - "{{ app_path }}/media"
+    - "{{ app_path }}/staticfiles"
+
+- name: Copy docker-compose configuration
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ app_path }}/docker-compose.yml"
+    mode: '0644'
+  become: false
+
+- name: Create .env file for production
+  template:
+    src: env.j2
+    dest: "{{ app_path }}/.env"
+    mode: '0600'
+  become: false
+
+- name: Stop Docker Compose services
+  community.docker.docker_compose_v2:
+    project_src: "{{ app_path }}"
+    files:
+      - docker-compose.yml
+    state: absent
+  become: true
+
+- name: Remove existing network
+  community.docker.docker_network:
+    name: assogest_network
+    state: absent
+    force: yes
+  become: true
+
+- name: Start Docker Compose services
+  community.docker.docker_compose_v2:
+    project_src: "{{ app_path }}"
+    files:
+      - docker-compose.yml
+    state: present
+  become: true
+
+- name: Wait for containers to start
+  pause:
+    seconds: 30
+
+- name: Install Node.js dependencies
+  command: npm install --include=dev
+  args:
+    chdir: "{{ app_path }}"
+  become: true
+
+- name: Build assets
+  command: npm run build
+  args:
+    chdir: "{{ app_path }}"
+  become: true
+
+- name: Collect static files
+  command: docker compose exec -T web python manage.py collectstatic --noinput
+  args:
+    chdir: "{{ app_path }}"
+  become: true
+
+- name: Run database migrations
+  command: docker compose exec -T web python manage.py migrate
+  args:
+    chdir: "{{ app_path }}"
+  become: true

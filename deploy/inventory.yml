@@ -1,0 +1,7 @@
+all:
+  hosts:
+    assogest:
+      ansible_host: sebastien-mariaux.com
+      ansible_user: debian
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

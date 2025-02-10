@@ -1,0 +1,25 @@
+# Application
+app_name: assogest
+domain_name: assogest.sebastien-mariaux.com
+app_path: "/home/debian/www/{{ app_name }}"
+venv_path: "{{ app_path }}/venv"
+repo_url: "git@github.com:sebastien-mariaux/Assogest.git"
+
+# System
+system_packages:
+  - python3
+  - python3-pip
+  - python3-venv
+  - nginx
+  - postgresql
+  - postgresql-contrib
+  - certbot
+  - python3-certbot-nginx
+
+# Nginx
+nginx_config_path: "/etc/nginx/sites-available/{{ app_name }}"
+nginx_enabled_path: "/etc/nginx/sites-enabled/{{ app_name }}"
+
+# PostgreSQL
+db_name: "{{ app_name }}"
+db_user: "{{ app_name }}"

@@ -62,7 +62,7 @@ jobs:
         DB_PASSWORD: postgres
         DB_HOST: localhost
         DB_PORT: 5434
-        DJANGO_SETTINGS_MODULE: assogest.settings
+        DJANGO_SETTINGS_MODULE: assogest.settings.local
         SECRET_KEY: github_actions_key
       run: |
         python manage.py test

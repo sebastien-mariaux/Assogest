@@ -1,0 +1,47 @@
+.form-floating {
+    > label {
+        color: #6c757d;
+    }
+
+    > .form-control {
+        &:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+    }
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+
+    .card-body {
+        .text-muted {
+            color: #95a5a6 !important;
+        }
+    }
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+
+    &:hover {
+        background-color: #2980b9;
+        border-color: #2980b9;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+    }
+}
+
+.alert {
+    border: none;
+    border-radius: 8px;
+
+    &.alert-danger {
+        background-color: #fff5f5;
+        color: #e74c3c;
+    }
+}

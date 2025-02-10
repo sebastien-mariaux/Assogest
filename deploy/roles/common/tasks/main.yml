@@ -1,0 +1,83 @@
+---
+- name: Remove unwanted repositories
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/etc/apt/sources.list.d/mysql.list"
+    - "/etc/apt/sources.list.d/php.list"
+    - "/etc/apt/sources.list.d/sury.list"
+  become: true
+
+- name: Clean apt
+  shell: |
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+  become: true
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  become: true
+
+- name: Install prerequisites
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+    state: present
+
+- name: Add Docker GPG apt key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable
+    state: present
+
+- name: Install Docker
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+
+- name: Create docker group
+  group:
+    name: docker
+    state: present
+
+- name: Add debian user to docker group
+  user:
+    name: debian
+    groups: docker
+    append: yes
+
+- name: Start Docker service
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Install Node.js repository
+  shell: |
+    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+  args:
+    creates: /etc/apt/sources.list.d/nodesource.list
+  become: true
+
+- name: Install Node.js and npm
+  apt:
+    name:
+      - nodejs
+      - build-essential
+    state: present
+    update_cache: yes
+  become: true
