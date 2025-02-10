@@ -86,6 +86,9 @@ Development emails are stored in the `tmp/emails/` directory.
 
 ## Deploy with Ansible
 
+```bash
+source ansible-env/bin/activate
+
 ### Vault password
 
 Edit secrets

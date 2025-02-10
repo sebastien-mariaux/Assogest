@@ -34,6 +34,21 @@
     mode: '0600'
   become: false
 
+- name: Stop Docker Compose services
+  community.docker.docker_compose_v2:
+    project_src: "{{ app_path }}"
+    files:
+      - docker-compose.yml
+    state: absent
+  become: true
+
+- name: Remove existing network
+  community.docker.docker_network:
+    name: assogest_network
+    state: absent
+    force: yes
+  become: true
+
 - name: Start Docker Compose services
   community.docker.docker_compose_v2:
     project_src: "{{ app_path }}"
@@ -42,15 +57,9 @@
     state: present
   become: true
 
-- name: Wait for database to be ready
-  command: docker compose exec -T web pg_isready -h db -U postgres
-  args:
-    chdir: "{{ app_path }}"
-  register: result
-  until: result.rc == 0
-  retries: 30
-  delay: 10
-  become: true
+- name: Wait for containers to start
+  pause:
+    seconds: 30
 
 - name: Install Node.js dependencies
   command: npm install --include=dev
@@ -69,13 +78,9 @@
   args:
     chdir: "{{ app_path }}"
   become: true
-  retries: 3
-  delay: 10
 
 - name: Run database migrations
   command: docker compose exec -T web python manage.py migrate
   args:
     chdir: "{{ app_path }}"
   become: true
-  retries: 3
-  delay: 10
